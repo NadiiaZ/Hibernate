@@ -15,13 +15,14 @@ public class Main {
         userService.createUsersTable();
         userService.saveUser("Maria", "Petrova" , (byte) 29);
         userService.saveUser("Ivan", "Fedorov" , (byte) 24);
-       userService.saveUser("Anastasia", "Sidorova" , (byte) 37);
+        userService.saveUser("Anastasia", "Sidorova" , (byte) 37);
         userService.saveUser("Leonid", "Ivanov" , (byte) 42);
 
         List <User> users = userService.getAllUsers();
         for (User user : users) {
             System.out.println(user);
         }
+
         userService.cleanUsersTable();
         userService.dropUsersTable();
     }
