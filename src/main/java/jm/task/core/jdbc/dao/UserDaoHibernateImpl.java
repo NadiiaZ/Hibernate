@@ -21,77 +21,56 @@ public class UserDaoHibernateImpl implements UserDao {
             "lastName VARCHAR(45) NULL, " +
             "age TINYINT NULL, " +
             "PRIMARY KEY (id))";
-        try (Session session = Util.hibernateSessionFactory().openSession()) {
-            session.beginTransaction();
-            session.createSQLQuery(query).executeUpdate();
-            session.getTransaction().commit();
-        //} catch (SQLSyntaxErrorException e) {
-         //   System.out.println("Table with this name has already deleted.");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+        Session session = Util.hibernateSessionFactory().openSession();
+        session.beginTransaction();
+        session.createSQLQuery(query).executeUpdate();
+        session.getTransaction().commit();
     }
 
     @Override
     public void dropUsersTable() {
-        try (Session session = Util.hibernateSessionFactory().openSession()) {
-            session.beginTransaction();
-            session.createSQLQuery("DROP TABLE USERS").executeUpdate();
-            session.getTransaction().commit();
-        //} catch (SQLSyntaxErrorException e) {
-          //  System.out.println("Table with this name has already deleted.");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Session session = Util.hibernateSessionFactory().openSession();
+        session.beginTransaction();
+        session.createSQLQuery("DROP TABLE USERS").executeUpdate();
+        session.getTransaction().commit();
     }
 
     @Override
     public void saveUser(String name, String lastName, byte age) {
-        try(Session session = Util.hibernateSessionFactory().openSession()) {
-            session.beginTransaction();
-            User user = new User(name, lastName, age);
-            session.save(user);
-            session.getTransaction().commit();
-            System.out.println("User " +name+ " was added!");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Session session = Util.hibernateSessionFactory().openSession();
+        session.beginTransaction();
+        User user = new User(name, lastName, age);
+        session.save(user);
+        session.getTransaction().commit();
+        System.out.println("User " +name+ " was added!");
     }
 
     @Override
     public void removeUserById(long id) {
-        try(Session session = Util.hibernateSessionFactory().openSession()) {
-            session.beginTransaction();
-            session.createQuery("delete User " +
+        Session session = Util.hibernateSessionFactory().openSession();
+        session.beginTransaction();
+        session.createQuery("delete User " +
                     "where id = " + id).executeUpdate();
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        session.getTransaction().commit();
     }
 
     @Override
     public List<User> getAllUsers() {
         List <User> users = new ArrayList<>();
-        try(Session session = Util.hibernateSessionFactory().openSession()) {
-            session.beginTransaction();
-            users = session.createQuery("from User")
-                    .getResultList();
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Session session = Util.hibernateSessionFactory().openSession();
+        session.beginTransaction();
+        users = session.createQuery("from User")
+                .getResultList();
+        session.getTransaction().commit();
         return users;
     }
 
     @Override
     public void cleanUsersTable() {
-        try(Session session = Util.hibernateSessionFactory().openSession()) {
-            session.beginTransaction();
-            session.createQuery("delete User").executeUpdate();
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Session session = Util.hibernateSessionFactory().openSession();
+        session.beginTransaction();
+        session.createQuery("delete User").executeUpdate();
+        session.getTransaction().commit();
     }
 }
